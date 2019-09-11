@@ -3,8 +3,58 @@ import './App.css';
 
 class Zip extends React.Component {
 
+  state = {
+    zipcode: [],
+    found: false
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.city === nextProps.city && this.state.zipcode === nextState.zipcode) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  renderCity = async () => {
+    
+    const response = await fetch(`http://ctp-zip-api.herokuapp.com/city/${this.props.city}`);
+    
+    if(response.ok){
+
+      const data = await response.json();
+
+      let ziplist = data;
+    
+      let jaxOutList = ziplist.map( (zipcode) =>
+        <div key={zipcode} style={ {textAlign:'center'}}>
+          <li>{zipcode}</li>
+        </div>
+      )
+
+      this.setState({
+        zipcode: jaxOutList,
+        found: true
+      })
+    }
+    else{
+      this.setState({
+        found: false
+      })
+    }
+
+  }
+
   render(){
-    return (<div></div>);
+
+    this.renderCity();
+    
+    return (<div>
+    {this.state.found && <div>
+      {this.state.zipcode}
+    </div>}
+    {!this.state.found && <div style={ {textAlign:'center'}}><b>No Results</b></div>}
+    </div>);
   }
 }
 
@@ -20,12 +70,13 @@ class CitySearchField extends React.Component {
       inputValue: event.target.value
     })
 
-    this.props.getCode(event.target.value)
+    this.props.getName(event.target.value)
 
   }
   
   render(){
-    return (<div className="text-center">
+    return (
+    <div style={ {textAlign:'center'}}>
       <label><b>City Name:</b>&nbsp;</label>
       <input onChange={this.inputHandler} type="text"
          value={this.state.inputValue}></input>
@@ -40,7 +91,7 @@ class App extends Component {
     CityName: ''
   }
 
-  getCityCodeHandler = (name) => {
+  getCityNameHandler = (name) => {
 
     this.setState({
       CityName: name
@@ -54,7 +105,7 @@ class App extends Component {
         <div className="App-header">
           <h2>City Search</h2>
         </div>
-        <CitySearchField getCode={this.getCityCodeHandler}/>
+        <CitySearchField getName={this.getCityNameHandler}/>
         <div>
           <Zip city={this.state.CityName}/>
         </div>

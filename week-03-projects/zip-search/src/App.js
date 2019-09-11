@@ -6,8 +6,7 @@ import Card from 'react-bootstrap/Card';
 class City extends React.Component {
   state = {
     cities: [],
-    found: false,
-    data: []
+    found: false
   }
 
   shouldComponentUpdate(nextProps, nextState) {
