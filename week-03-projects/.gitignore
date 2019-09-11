@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+city-search/node_modules
+zip-search/node_modules
 /.pnp
 .pnp.js
 

@@ -110,8 +110,7 @@ class App extends Component {
   getZipCodeHandler = (code) => {
 
     this.setState({
-      zipcode: code,
-      showCities: true
+      zipcode: code
     })
 
   }
