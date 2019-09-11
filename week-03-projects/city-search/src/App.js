@@ -18,7 +18,9 @@ class Zip extends React.Component {
 
   renderCity = async () => {
     
-    const response = await fetch(`http://ctp-zip-api.herokuapp.com/city/${this.props.city}`);
+    let cityName = this.props.city.toUpperCase();
+
+    const response = await fetch(`http://ctp-zip-api.herokuapp.com/city/${cityName}`);
     
     if(response.ok){
 
