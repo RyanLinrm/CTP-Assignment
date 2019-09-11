@@ -53,7 +53,12 @@ class City extends React.Component {
         cities: jaxOutList,
         found: true
       })
-  }
+    }
+    else{
+      this.setState({
+        found: false
+      })
+    }
 
   }
 
@@ -62,7 +67,10 @@ class City extends React.Component {
     this.renderCity();
     
     return (<div>
+    {this.state.found && <div>
       {this.state.cities}
+    </div>}
+    {!this.state.found && <div className="text-center"><b>No Results</b></div>}
     </div>);
   }
 }
