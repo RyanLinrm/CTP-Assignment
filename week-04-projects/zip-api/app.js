@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
 
 app.get('/zip/:zipcode', (req, res) => {
   // fill in...
+  console.log(req.params.zipcode);
+
+  const zipcode = req.params.zipcode;
+  res.json(zipdb.byZip[zipcode]);
 });
 
 
